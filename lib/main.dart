@@ -1,4 +1,9 @@
+import 'package:firebase_authentication/screens/login_Screen.dart';
 import 'package:flutter/material.dart';
+
+import 'screens/login_email_password_screen.dart';
+import 'screens/phone_screen.dart';
+import 'screens/signup_email_password_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -7,15 +12,19 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Flutter Firebase Auth',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: Container(),
+      home: LogInScreen(),
+      routes: {
+        EmailPasswordSignup.routeName: (context) => const EmailPasswordSignup(),
+        EmailPasswordLogin.routeName: (context) => const EmailPasswordLogin(),
+        PhoneScreen.routeName: (context) => const PhoneScreen(),
+      },
     );
   }
 }
