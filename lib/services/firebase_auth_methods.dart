@@ -18,11 +18,22 @@ class FirebaseAuthMethods {
         email: email,
         password: password,
       );
+      await sendEmailVerification(context);
     } on FirebaseAuthException catch (e) {
       // if (e.code == "weak-password") {
       //   // on FirebaseAuthException we can generate custom errors
       //   showSnackBar(context, "Weak Password");
       // }
+      showSnackBar(context, e.message!);
+    }
+  }
+
+  //EMAIL VERIFICATION
+  Future<void> sendEmailVerification(BuildContext context) async {
+    try {
+      _auth.currentUser!.sendEmailVerification();
+      showSnackBar(context, "Email verification sent!.");
+    } on FirebaseAuthException catch (e) {
       showSnackBar(context, e.message!);
     }
   }
