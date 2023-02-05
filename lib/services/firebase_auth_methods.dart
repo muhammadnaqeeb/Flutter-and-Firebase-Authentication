@@ -140,21 +140,13 @@ class FirebaseAuthMethods {
       showSnackBar(context, e.message!);
     }
   }
-}
 
-// if user is loged in go directly to home screen else go to Login screen
-class AuthWrapper extends StatelessWidget {
-  const AuthWrapper({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    final firebaseUser = context.watch<User?>();
-
-    // if user have logedin or user have signuped
-    if (firebaseUser != null) {
-      return const HomeScreen();
+// SIGN OUT
+  Future<void> sign_Out(BuildContext context) async {
+    try {
+      await _auth.signOut();
+    } on FirebaseAuthException catch (e) {
+      showSnackBar(context, e.message!);
     }
-
-    return LogInScreen();
   }
 }

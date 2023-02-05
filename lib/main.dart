@@ -6,6 +6,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'screens/HomeScreen.dart';
 import 'screens/login_email_password_screen.dart';
 import 'screens/phone_screen.dart';
 import 'screens/signup_email_password_screen.dart';
@@ -40,7 +41,7 @@ class MyApp extends StatelessWidget {
         ),
         // AuthWrapper is a stateless class return Home Screen if the user is loged in and
         // if user is not logged in the it will display login screen
-        // AuthWrapper is present in firebase_auth_methods.dart
+
         home: const AuthWrapper(),
         routes: {
           EmailPasswordSignup.routeName: (context) =>
@@ -50,5 +51,22 @@ class MyApp extends StatelessWidget {
         },
       ),
     );
+  }
+}
+
+// if user is loged in go directly to home screen else go to Login screen
+class AuthWrapper extends StatelessWidget {
+  const AuthWrapper({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final firebaseUser = context.watch<User?>();
+
+    // if user have logedin or user have signuped
+    if (firebaseUser != null) {
+      return const HomeScreen();
+    }
+
+    return LogInScreen();
   }
 }

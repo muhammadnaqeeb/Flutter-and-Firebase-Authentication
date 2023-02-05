@@ -34,7 +34,12 @@ class HomeScreen extends StatelessWidget {
                     .sendEmailVerification(context);
               },
               text: "Verify Email",
-            )
+            ),
+          CustomButton(
+              onTap: () {
+                context.read<FirebaseAuthMethods>().sign_Out(context);
+              },
+              text: 'Sign Out')
         ],
       ),
     );
