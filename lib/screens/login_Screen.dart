@@ -1,6 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_authentication/screens/login_email_password_screen.dart';
 import 'package:firebase_authentication/screens/phone_screen.dart';
 import 'package:firebase_authentication/screens/signup_email_password_screen.dart';
+import 'package:firebase_authentication/services/firebase_auth_methods.dart';
 import 'package:flutter/material.dart';
 
 import '../widgets/custom_button.dart';
@@ -38,7 +40,10 @@ class _LogInScreenState extends State<LogInScreen> {
               text: "Phone Sign In",
             ),
             CustomButton(
-              onTap: () {},
+              onTap: () {
+                FirebaseAuthMethods(FirebaseAuth.instance)
+                    .signInWithGoogle(context);
+              },
               text: "Google Sign In",
             ),
             CustomButton(
