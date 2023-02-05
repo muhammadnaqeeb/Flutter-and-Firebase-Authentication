@@ -4,6 +4,7 @@ import 'package:firebase_authentication/screens/phone_screen.dart';
 import 'package:firebase_authentication/screens/signup_email_password_screen.dart';
 import 'package:firebase_authentication/services/firebase_auth_methods.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../widgets/custom_button.dart';
 
@@ -41,8 +42,10 @@ class _LogInScreenState extends State<LogInScreen> {
             ),
             CustomButton(
               onTap: () {
-                FirebaseAuthMethods(FirebaseAuth.instance)
-                    .signInWithGoogle(context);
+                // FirebaseAuthMethods(FirebaseAuth.instance)
+                //     .signInWithGoogle(context);
+                // OR
+                context.read<FirebaseAuthMethods>().signInWithGoogle(context);
               },
               text: "Google Sign In",
             ),
@@ -52,8 +55,10 @@ class _LogInScreenState extends State<LogInScreen> {
             ),
             CustomButton(
               onTap: () {
-                FirebaseAuthMethods(FirebaseAuth.instance)
-                    .signInAnonymously(context);
+                // FirebaseAuthMethods(FirebaseAuth.instance)
+                //     .signInAnonymously(context);
+                //OR
+                context.read<FirebaseAuthMethods>().signInAnonymously(context);
               },
               text: "Anonymous Sign In",
             )

@@ -1,7 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_authentication/firebase_options.dart';
 import 'package:firebase_authentication/screens/login_Screen.dart';
+import 'package:firebase_authentication/services/firebase_auth_methods.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'screens/login_email_password_screen.dart';
 import 'screens/phone_screen.dart';
@@ -20,17 +23,32 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Firebase Auth',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+    return MultiProvider(
+      providers: [
+        Provider<FirebaseAuthMethods>(
+          create: (_) => FirebaseAuthMethods(FirebaseAuth.instance),
+        ),
+        StreamProvider(
+          create: (context) => context.read<FirebaseAuthMethods>().authState,
+          initialData: null,
+        )
+      ],
+      child: MaterialApp(
+        title: 'Flutter Firebase Auth',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        // AuthWrapper is a stateless class return Home Screen if the user is loged in and
+        // if user is not logged in the it will display login screen
+        // AuthWrapper is present in firebase_auth_methods.dart
+        home: const AuthWrapper(),
+        routes: {
+          EmailPasswordSignup.routeName: (context) =>
+              const EmailPasswordSignup(),
+          EmailPasswordLogin.routeName: (context) => const EmailPasswordLogin(),
+          PhoneScreen.routeName: (context) => const PhoneScreen(),
+        },
       ),
-      home: LogInScreen(),
-      routes: {
-        EmailPasswordSignup.routeName: (context) => const EmailPasswordSignup(),
-        EmailPasswordLogin.routeName: (context) => const EmailPasswordLogin(),
-        PhoneScreen.routeName: (context) => const PhoneScreen(),
-      },
     );
   }
 }

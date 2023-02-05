@@ -3,6 +3,7 @@ import 'package:firebase_authentication/services/firebase_auth_methods.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:provider/provider.dart';
 
 import '../widgets/custom_button.dart';
 import '../widgets/custom_textfield.dart';
@@ -19,7 +20,11 @@ class _PhoneScreenState extends State<PhoneScreen> {
   final TextEditingController phoneController = TextEditingController();
 
   void phoneSignIn() {
-    FirebaseAuthMethods(FirebaseAuth.instance)
+    // FirebaseAuthMethods(FirebaseAuth.instance)
+    //     .phoneSignIn(context, phoneController.text);
+    // OR
+    context
+        .read<FirebaseAuthMethods>()
         .phoneSignIn(context, phoneController.text);
   }
 

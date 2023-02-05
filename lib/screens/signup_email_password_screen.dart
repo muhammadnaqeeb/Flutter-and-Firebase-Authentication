@@ -4,6 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:provider/provider.dart';
 
 import '../widgets/custom_button.dart';
 import '../widgets/custom_textfield.dart';
@@ -29,7 +30,12 @@ class _EmailPasswordSignupState extends State<EmailPasswordSignup> {
   }
 
   void signUpUser() async {
-    FirebaseAuthMethods(FirebaseAuth.instance).signUpWithEmail(
+    // FirebaseAuthMethods(FirebaseAuth.instance).signUpWithEmail(
+    //     email: emailController.text,
+    //     password: passwordController.text,
+    //     context: context);
+    //OR
+    context.read<FirebaseAuthMethods>().signUpWithEmail(
         email: emailController.text,
         password: passwordController.text,
         context: context);

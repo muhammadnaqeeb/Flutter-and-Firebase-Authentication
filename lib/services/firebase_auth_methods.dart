@@ -1,13 +1,26 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_authentication/screens/login_Screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:provider/provider.dart';
 
+import '../screens/HomeScreen.dart';
 import '../utils/showOTPDialog.dart';
 import '../utils/showSnackBar.dart';
 
 class FirebaseAuthMethods {
   final FirebaseAuth _auth;
   FirebaseAuthMethods(this._auth);
+
+// use this user when we are already login
+  User get user => _auth.currentUser!;
+
+  // STATE PERSISTENCE
+  // this will return stream of user, which will tell us user is present or not and some detail about user
+  Stream<User?> get authState => FirebaseAuth.instance.authStateChanges();
+  // we can also place the following two depending on condition
+  // FirebaseAuth.instance.userChanges();
+  // FirebaseAuth.instance.idTokenChanges();
 
   // EMAIL SIGN UP
   Future<void> signUpWithEmail({
@@ -126,5 +139,22 @@ class FirebaseAuthMethods {
     } on FirebaseAuthException catch (e) {
       showSnackBar(context, e.message!);
     }
+  }
+}
+
+// if user is loged in go directly to home screen else go to Login screen
+class AuthWrapper extends StatelessWidget {
+  const AuthWrapper({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final firebaseUser = context.watch<User?>();
+
+    // if user have logedin or user have signuped
+    if (firebaseUser != null) {
+      return const HomeScreen();
+    }
+
+    return LogInScreen();
   }
 }

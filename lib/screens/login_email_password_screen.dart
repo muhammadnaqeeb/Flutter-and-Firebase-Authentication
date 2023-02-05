@@ -7,6 +7,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:provider/provider.dart';
 
 class EmailPasswordLogin extends StatefulWidget {
   static String routeName = "/login-email-pasword";
@@ -29,11 +30,16 @@ class _EmailPasswordLoginState extends State<EmailPasswordLogin> {
   }
 
   void loginUser() {
-    FirebaseAuthMethods(FirebaseAuth.instance).loginWithEmail(
-      email: emailController.text,
-      password: passwordController.text,
-      context: context,
-    );
+    // FirebaseAuthMethods(FirebaseAuth.instance).loginWithEmail(
+    //   email: emailController.text,
+    //   password: passwordController.text,
+    //   context: context,
+    // );
+    //OR
+    context.read<FirebaseAuthMethods>().loginWithEmail(
+        email: emailController.text,
+        password: passwordController.text,
+        context: context);
   }
 
   @override
