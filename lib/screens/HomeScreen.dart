@@ -39,7 +39,13 @@ class HomeScreen extends StatelessWidget {
               onTap: () {
                 context.read<FirebaseAuthMethods>().sign_Out(context);
               },
-              text: 'Sign Out')
+              text: 'Sign Out'),
+
+          CustomButton(
+              onTap: () {
+                context.read<FirebaseAuthMethods>().deleteAccount(context);
+              },
+              text: 'Delete'),
         ],
       ),
     );
