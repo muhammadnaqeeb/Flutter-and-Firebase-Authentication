@@ -1,3 +1,5 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_authentication/services/firebase_auth_methods.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -14,7 +16,12 @@ class PhoneScreen extends StatefulWidget {
 }
 
 class _PhoneScreenState extends State<PhoneScreen> {
-  final TextEditingController otpController = TextEditingController();
+  final TextEditingController phoneController = TextEditingController();
+
+  void phoneSignIn() {
+    FirebaseAuthMethods(FirebaseAuth.instance)
+        .phoneSignIn(context, phoneController.text);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,14 +35,14 @@ class _PhoneScreenState extends State<PhoneScreen> {
           Container(
             margin: const EdgeInsets.symmetric(horizontal: 20),
             child: CustomTextField(
-              controller: otpController,
+              controller: phoneController,
               hintText: "Enter phone number",
             ),
           ),
           const SizedBox(
             height: 10,
           ),
-          CustomButton(onTap: () {}, text: "Send otp ")
+          CustomButton(onTap: phoneSignIn, text: "Send otp ")
         ],
       ),
     );
